@@ -1,12 +1,30 @@
+# Installs the cluster
 rm install.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/install.yaml
 kubectl apply --namespace open-match -f install.yaml
 
+# Imports default config
 rm 06-open-match-override-configmap.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/06-open-match-override-configmap.yaml
 kubectl apply --namespace open-match -f 06-open-match-override-configmap.yaml
 
+# Imports default evaluator
 rm 07-open-match-default-evaluator.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/07-open-match-default-evaluator.yaml
 kubectl apply --namespace open-match -f 07-open-match-default-evaluator.yaml
 
+# Installs a demo
+rm 02-open-match-demo.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/02-open-match-demo.yaml
+kubectl create namespace open-match-demo
+kubectl apply --namespace open-match -f 02-open-match-demo.yaml
+
+# Access to the demo
+kubectl port-forward --namespace open-match-demo service/om-demo 51507:51507
+
+# Delete The Demo
+kubectl delete namespace open-match-demo
+
+# Delete Open Match and Configs
+kubectl delete psp,clusterrole,clusterrolebinding --selector=release=open-match
+kubectl delete namespace open-match
