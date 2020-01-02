@@ -1,2 +1,3 @@
-kubectl apply --namespace open-match -f https://raw.githubusercontent.com/biondizzle/open-match-installers/master/install.yaml
-kubectl apply --namespace open-match -f https://raw.githubusercontent.com/biondizzle/open-match-installers/master/01-open-match-core.yaml
+rm install.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/install.yaml
+kubectl apply --namespace open-match -f install.yaml
