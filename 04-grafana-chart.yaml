@@ -3804,7 +3804,7 @@ spec:
     release: open-match
 ---
 # Source: open-match/charts/open-match-telemetry/charts/grafana/templates/deployment.yaml
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: open-match-grafana
