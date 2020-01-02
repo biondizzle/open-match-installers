@@ -1,3 +1,12 @@
 rm install.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/install.yaml
 kubectl apply --namespace open-match -f install.yaml
+
+rm 06-open-match-override-configmap.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/06-open-match-override-configmap.yaml
+kubectl apply --namespace open-match -f 06-open-match-override-configmap.yaml
+
+rm 07-open-match-default-evaluator.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/07-open-match-default-evaluator.yaml
+kubectl apply --namespace open-match -f 07-open-match-default-evaluator.yaml
+
