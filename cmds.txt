@@ -17,10 +17,10 @@ kubectl apply --namespace open-match -f 07-open-match-default-evaluator.yaml
 rm 02-open-match-demo.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/02-open-match-demo.yaml
 kubectl create namespace open-match-demo
-kubectl apply --namespace open-match -f 02-open-match-demo.yaml
+kubectl apply --namespace open-match-demo -f 02-open-match-demo.yaml
 
 # Access to the demo
-kubectl port-forward --namespace open-match-demo service/om-demo 51507:51507
+kubectl port-forward --address 207.246.124.28 --namespace open-match-demo service/om-demo 51507:51507
 
 # Delete The Demo
 kubectl delete namespace open-match-demo
