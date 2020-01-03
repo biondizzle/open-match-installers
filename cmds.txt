@@ -28,3 +28,6 @@ kubectl delete namespace open-match-demo
 # Delete Open Match and Configs
 kubectl delete psp,clusterrole,clusterrolebinding --selector=release=open-match
 kubectl delete namespace open-match
+
+# Delete Tutorial
+kubectl delete namespace mm101-tutorial
