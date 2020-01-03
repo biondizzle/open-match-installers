@@ -29,5 +29,29 @@ kubectl delete namespace open-match-demo
 kubectl delete psp,clusterrole,clusterrolebinding --selector=release=open-match
 kubectl delete namespace open-match
 
+# Create the Tutorial
+kubectl create namespace mm101-tutorial
+
+# Build the Frontend image.
+sudo docker build -t mikebiondi/mm101-tutorial-frontend frontend/
+
+# Push the Frontend image to the configured Registry.
+sudo docker push mikebiondi/mm101-tutorial-frontend
+
+# Build the Director image.
+sudo docker build -t mikebiondi/mm101-tutorial-director director/
+
+# Push the Director image to the configured Registry.
+sudo docker push mikebiondi/mm101-tutorial-director
+
+# Build the MatchFunction image.
+sudo docker build -t mikebiondi/mm101-tutorial-matchfunction matchfunction/
+
+# Push the MatchFunction image to the configured Registry.
+sudo docker push mikebiondi/mm101-tutorial-matchfunction
+
+# Deploy and run
+sed "s|REGISTRY_PLACEHOLDER|$REGISTRY|g" matchmaker.yaml | kubectl apply -f -
+
 # Delete Tutorial
 kubectl delete namespace mm101-tutorial
