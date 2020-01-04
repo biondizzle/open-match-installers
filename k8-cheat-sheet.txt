@@ -1,0 +1,77 @@
+# Official Cheat Sheet
+https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+# Show nodes in cluster
+kubectl get nodes
+
+# generate the "Add nodes to cluster" command
+kubeadm token create --print-join-command
+
+# DELETE ALL PODS IN ALL NAME SPACES
+kubectl get pods --no-headers=true --all-namespaces |sed -r 's/(\S+)\s+(\S+).*/kubectl --namespace \1 delete pod \2/e'
+
+# Kubernetes LIST ALL STORAGE CLASSES
+kubectl get storageclass
+
+# Show persistent storage volumes
+kubectl get pv
+
+# Show details of persistent storage volumes
+kubectl describe pv
+
+# View Open Match Network
+kubectl get pod -o wide -n open-match
+
+# View Open Match Pods
+kubectl -n open-match get pods
+
+# Watch Pods in REAL TIME
+watch kubectl get pods --all-namespaces
+
+# View Jaeger Query Logs
+kubectl logs -n open-match pod/open-match-jaeger-query-7574df6c79-cvwr5 -c open-match-jaeger-query
+kubectl logs -n open-match pod/open-match-jaeger-query-7574df6c79-cvwr5 -c open-match-jaeger-agent-sidecar
+
+# View Cassandra Logs
+kubectl logs -n open-match pod/open-match-cassandra-0
+
+# View Redis Logs
+kubectl logs -n open-match pod/om-redis-master-0 -c om-redis
+kubectl logs -n open-match pod/om-redis-master-0 -c metrics
+kubectl logs -n open-match pod/om-redis-slave-0 -c om-redis
+kubectl logs -n open-match pod/om-redis-slave-0 -c metrics
+
+# View Front End Logs
+kubectl logs -n open-match pod/om-frontend-bf669b67f-2p9ss
+
+# View Backend Logs
+kubectl logs -n open-match pod/om-backend-8fdb77c58-95knc
+
+# DESCRIBE A POD TO SEE WHY IT IS STUCK IN PENDING
+kubectl describe pod om-redis-master-0 -n open-match
+
+# MAKE NFS THE DEFAULT STORAGE
+kubectl patch storageclass local-storage -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
+
+
+# DELETE A PERSISTENT VOLUME
+kubectl delete pv kube-persistent-storage --grace-period=0 --force
+kubectl patch pv kube-persistent-storage -p '{"metadata": {"finalizers": null}}'
+
+# DELETE A STORAGE CLASS
+kubectl delete storageclass local-storage
+
+# CREATE STORAGE CLASS
+kubectl apply -f /etc/kubernetes/sc.yaml
+
+# CREATE PERSISTENT VOLUME
+kubectl apply -f /etc/kubernetes/pv.yaml
+
+# CREATE PV IN OPEN MATCH NAMESPACE
+kubectl apply --namespace open-match -f /etc/kubernetes/open-match-pv.yaml
+
+
+# INSTALL CALICO
+curl https://docs.projectcalico.org/v3.11/manifests/calico.yaml -O
+
+POD_CIDR="10.244.0.0/16" sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml

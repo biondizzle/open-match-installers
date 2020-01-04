@@ -1,7 +1,38 @@
+# create the namespace
+kubectl create namespace open-match
+
 # Installs the cluster
 rm install.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/install.yaml
 kubectl apply --namespace open-match -f install.yaml
+
+# Installs the cluster... 01
+rm 01-open-match-core.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/01-open-match-core.yaml
+kubectl apply --namespace open-match -f 01-open-match-core.yaml
+
+/* DO NOT USE
+# Installs OPEN MATCH DEMO!!
+rm 02-open-match-demo.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/02-open-match-demo.yaml
+kubectl create namespace open-match-demo
+kubectl apply --namespace open-match-demo -f 02-open-match-demo.yaml
+*/ DO NOT USE
+
+# Installs the cluster... 03
+rm 03-prometheus-chart.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/03-prometheus-chart.yaml
+kubectl apply --namespace open-match -f 03-prometheus-chart.yaml
+
+# Installs the cluster... 04
+rm 04-grafana-chart.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/04-grafana-chart.yaml
+kubectl apply --namespace open-match -f 04-grafana-chart.yaml
+
+# Installs the cluster... 05
+rm 05-jaeger-chart.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/05-jaeger-chart.yaml
+kubectl apply --namespace open-match -f 05-jaeger-chart.yaml
 
 # Imports default config
 rm 06-open-match-override-configmap.yaml
@@ -51,7 +82,7 @@ sudo docker build -t mikebiondi/mm101-tutorial-matchfunction matchfunction/
 sudo docker push mikebiondi/mm101-tutorial-matchfunction
 
 # Deploy and run
-sed "s|REGISTRY_PLACEHOLDER|$REGISTRY|g" matchmaker.yaml | kubectl apply -f -
+sed "s|REGISTRY_PLACEHOLDER|mikebiondi|g" matchmaker.yaml | kubectl apply -f -
 
 # Delete Tutorial
 kubectl delete namespace mm101-tutorial
