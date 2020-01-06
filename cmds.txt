@@ -92,14 +92,27 @@ kubectl create namespace open-match-facade
 rm facade-pod.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/facade-pod.yaml
 kubectl apply --namespace open-match-facade -f facade-pod.yaml
-kubectl expose deployment/open-match-facade
+
+# Expose facade
+kubectl expose deployment om-facade --type=LoadBalancer --target-port=8990 --name=om-facade-service --namespace open-match-facade --
+kubectl patch svc om-facade-service -n open-match-facade -p '{"spec": {"ports": [{"port": 8990, "targetPort": 8990}], "type": "LoadBalancer", "externalIPs":["207.246.124.28"]}}'
 
 # View and test facade pod
 kubectl get pod -o wide -n open-match-facade
-kubectl get service -n open-match-facade
+kubectl get svc om-facade --namespace open-match-facade
+kubectl get services -n open-match-facade
+kubectl describe svc om-facade --namespace open-match-facade
+kubectl get ep om-facade --namespace open-match-facade
 kubectl get ingress om-facade-service-ingress -n open-match-facade
 kubectl describe pod om-facade -n open-match-facade
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.115.157:8990/om-facade
+
+# Check the service
+kubectl exec my-nginx-3800858182-jr4a2 -- printenv | grep SERVICE
+
+# Check DNS
+kubectl get services kube-dns --namespace=kube-system
+
 
 #delete facade
 kubectl delete namespace open-match-facade
@@ -108,3 +121,6 @@ kubectl delete namespace open-match-facade
 # Expose facade pod
 kubectl expose pod om-facade --namespace open-match-facade --type=NodePort --name=om-facade-service
 kubectl expose rc nginx --port=80 --target-port=8000
+
+
+kubectl get svc om-facade --namespace open-match-facade -o yaml | grep nodePort -C 5
