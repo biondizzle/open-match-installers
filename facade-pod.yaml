@@ -16,23 +16,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app.kubernetes.io/name: om-facade
   name: om-facade
   namespace: open-match-facade
 spec:
   selector:
     matchLabels:
       run: om-facade
-      labels:
-        app.kubernetes.io/name: om-facade
   replicas: 2
   template:
     metadata:
       labels:
         run: om-facade
-        labels:
-          app.kubernetes.io/name: om-facade
     spec:
       containers:
         - name: om-facade
