@@ -90,7 +90,7 @@ kubectl delete namespace mm101-tutorial
 # Install facade pod
 kubectl create namespace open-match-facade
 rm facade-pod.yaml
-wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/facade-pod.yaml
+wget --no-check-certificate --no-cache --no-cookies https://raw.githubusercontent.com/biondizzle/open-match-installers/master/facade-pod.yaml
 kubectl apply --namespace open-match-facade -f facade-pod.yaml
 
 # Expose facade

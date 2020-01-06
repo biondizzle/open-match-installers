@@ -22,9 +22,6 @@ spec:
   selector:
     matchLabels:
       run: om-facade
-  ports:
-    - protocol: TCP
-      port: 8990
   replicas: 2
   template:
     metadata:
