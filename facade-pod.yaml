@@ -1,4 +1,5 @@
---- #---
+---
+#---
 #apiVersion: v1
 #kind: Pod
 #metadata:
@@ -33,20 +34,19 @@ spec:
           ports:
             - containerPort: 8990
               protocol: TCP
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: om-facade-service
-  namespace: open-match-facade
-spec:
-  selector:
-    app: om-facade
-  ports:
-    - protocol: TCP
-      port: 8990
-      targetPort: 8990
+#---
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: om-facade-service
+#  namespace: open-match-facade
+#spec:
+#  selector:
+#    app: om-facade
+#  ports:
+#    - protocol: TCP
+#      port: 8990
+#      targetPort: 8990
 
 #---
 #apiVersion: v1
@@ -60,13 +60,13 @@ spec:
 #    ports:
 #      - port: 8080
 
----
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: om-facade-service-ingress
-  namespace: open-match-facade
-spec:
-  backend:
-    serviceName: om-facade-service
-    servicePort: 8990
+#---
+#apiVersion: networking.k8s.io/v1beta1
+#kind: Ingress
+#metadata:
+#  name: om-facade-service-ingress
+#  namespace: open-match-facade
+#spec:
+#  backend:
+#    serviceName: om-facade-service
+#    servicePort: 8990

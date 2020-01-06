@@ -92,6 +92,7 @@ kubectl create namespace open-match-facade
 rm facade-pod.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/facade-pod.yaml
 kubectl apply --namespace open-match-facade -f facade-pod.yaml
+kubectl expose deployment/open-match-facade
 
 # View and test facade pod
 kubectl get pod -o wide -n open-match-facade
