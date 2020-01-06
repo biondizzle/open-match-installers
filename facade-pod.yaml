@@ -22,7 +22,7 @@ spec:
     app: om-facade
   ports:
     - protocol: TCP
-      port: 8080
+      port: 8990
       targetPort: 8990
 
 #---
@@ -43,13 +43,7 @@ kind: Ingress
 metadata:
   name: om-facade-service-ingress
   namespace: open-match-facade
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  rules:
-    - http:
-        paths:
-          - path: /
-            backend:
-              serviceName: om-facade-service
-              servicePort: 8080
+  backend:
+    serviceName: om-facade-service
+    servicePort: 8990
