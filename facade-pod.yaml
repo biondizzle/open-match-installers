@@ -42,6 +42,7 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: om-facade-service-ingress
+  namespace: open-match-facade
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
