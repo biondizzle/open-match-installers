@@ -86,3 +86,12 @@ sed "s|REGISTRY_PLACEHOLDER|mikebiondi|g" matchmaker.yaml | kubectl apply -f -
 
 # Delete Tutorial
 kubectl delete namespace mm101-tutorial
+
+# Install facade pod
+kubectl create namespace open-match-facade
+rm facade-pod.yaml
+wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/facade-pod.yaml
+kubectl apply --namespace open-match-facade -f facade-pod.yaml
+
+
+kubectl describe pod om-facade -n open-match-facade

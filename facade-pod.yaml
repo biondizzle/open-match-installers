@@ -5,12 +5,5 @@ metadata:
   namespace: open-match-facade
 spec:
   containers:
-    - name: open-match-facade
+    - name: om-facade
       image: mikebiondi/open-match-facade
-      resources:
-        limits:
-          memory: "256Mi"
-        requests:
-          memory: "256Mi"
-      command: ["stress"]
-      args: ["--vm", "1", "--vm-bytes", "256M", "--vm-hang", "1"]
