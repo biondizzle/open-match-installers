@@ -98,5 +98,10 @@ kubectl describe pod om-facade -n open-match-facade
 kubectl get pod -o wide -n open-match-facade
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.115.156:8990/om-facade
 
+#delete facade
+kubectl delete namespace open-match-facade
+
+
 # Expose facade pod
 kubectl expose pod om-facade --namespace open-match-facade --type=NodePort --name=om-facade-service
+kubectl expose rc nginx --port=80 --target-port=8000
