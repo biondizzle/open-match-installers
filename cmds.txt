@@ -95,7 +95,7 @@ kubectl apply --namespace open-match-facade -f facade-pod.yaml
 
 # Expose facade
 kubectl expose deployment om-facade --type=LoadBalancer --target-port=8990 --name=om-facade-service --namespace open-match-facade --
-kubectl patch svc om-facade-service -n open-match-facade -p '{"spec": {"ports": [{"port": 8990, "targetPort": 8990, "nodePort": 8990}], "type": "LoadBalancer", "externalIPs":["207.246.124.28"]}}'
+kubectl patch svc om-facade-service -n open-match-facade -p '{"spec": {"ports": [{"port": 8990, "targetPort": 8990}], "type": "LoadBalancer", "externalIPs":["207.246.124.28"]}}'
 
 # View and test facade pod
 kubectl get pod -o wide -n open-match-facade
@@ -105,7 +105,7 @@ kubectl describe svc om-facade --namespace open-match-facade
 kubectl get ep om-facade --namespace open-match-facade
 kubectl get ingress om-facade-service-ingress -n open-match-facade
 kubectl describe pod om-facade -n open-match-facade
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.115.157:8990/om-facade
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.115.161:8990/om-facade
 
 # Check the service
 kubectl exec my-nginx-3800858182-jr4a2 -- printenv | grep SERVICE
