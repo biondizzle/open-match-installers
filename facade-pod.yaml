@@ -33,7 +33,6 @@ spec:
           image: mikebiondi/open-match-facade
           ports:
             - protocol: TCP
-              port: 8990
               targetPort: 8990
               containerPort: 8990
 #---
