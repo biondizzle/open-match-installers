@@ -22,6 +22,10 @@ spec:
   selector:
     matchLabels:
       run: om-facade
+  ports:
+    - protocol: TCP
+      port: 8990
+      targetPort: 8990
   replicas: 2
   template:
     metadata:
@@ -33,8 +37,6 @@ spec:
           image: mikebiondi/open-match-facade
           ports:
             - containerPort: 8990
-              protocol: TCP
-            - targetPort: 8990
               protocol: TCP
 #---
 #apiVersion: v1
