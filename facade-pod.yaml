@@ -7,3 +7,20 @@ spec:
   containers:
     - name: om-facade
       image: mikebiondi/open-match-facade
+      ports:
+        - containerPort: 8990
+          protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: om-facade-service
+  namespace: open-match-facade
+spec:
+  selector:
+    app: om-facade
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8990

@@ -93,5 +93,10 @@ rm facade-pod.yaml
 wget https://raw.githubusercontent.com/biondizzle/open-match-installers/master/facade-pod.yaml
 kubectl apply --namespace open-match-facade -f facade-pod.yaml
 
-
+# View and test facade pod
 kubectl describe pod om-facade -n open-match-facade
+kubectl get pod -o wide -n open-match-facade
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.115.156:8990/om-facade
+
+# Expose facade pod
+kubectl expose pod om-facade --namespace open-match-facade --type=NodePort --name=om-facade-service
