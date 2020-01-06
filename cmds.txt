@@ -95,8 +95,10 @@ wget --no-check-certificate --no-cache --no-cookies http://cone.cloud/transfer/f
 kubectl apply --namespace open-match-facade -f facade-pod.yaml
 
 # Expose facade
+/** NO LONGER NEEDED!!
 kubectl expose deployment om-facade --type=LoadBalancer --target-port=8990 --name=om-facade-service --namespace open-match-facade --
 kubectl patch svc om-facade-service -n open-match-facade -p '{"spec": {"ports": [{"port": 8990, "targetPort": 8990, "nodePort" : 32424}], "type": "LoadBalancer", "externalIPs":["207.246.124.28"]}}'
+**/
 
 # View and test facade pod
 kubectl get pod -o wide -n open-match-facade
@@ -106,13 +108,6 @@ kubectl get ep om-facade --namespace open-match-facade
 kubectl get ingress om-facade-service-ingress -n open-match-facade
 kubectl describe pod om-facade -n open-match-facade
 curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.207.163:8990/om-facade
-
-# Check the service
-kubectl exec my-nginx-3800858182-jr4a2 -- printenv | grep SERVICE
-
-# Check DNS
-kubectl get services kube-dns --namespace=kube-system
-
 
 #delete facade
 kubectl delete namespace open-match-facade
@@ -124,3 +119,21 @@ kubectl expose rc nginx --port=80 --target-port=8000
 
 
 kubectl get svc om-facade --namespace open-match-facade -o yaml | grep nodePort -C 5
+
+kubectl create namespace mm102-tutorial
+
+docker build -t mikebiondi/mm102-tutorial-frontend frontend/
+docker push mikebiondi/mm102-tutorial-frontend
+docker build -t mikebiondi/mm102-tutorial-director director/
+docker push mikebiondi/mm102-tutorial-director
+docker build -t mikebiondi/mm102-tutorial-matchfunction matchfunction/
+docker push mikebiondi/mm102-tutorial-matchfunction
+
+wget --no-check-certificate --no-cache --no-cookies http://cone.cloud/transfer/matchmaker.yaml
+kubectl apply -f matchmaker.yaml
+
+kubectl get pods -n mm102-tutorial
+kubectl get pod -o wide -n mm102-tutorial
+
+kubectl delete namespace mm102-tutorial
+
