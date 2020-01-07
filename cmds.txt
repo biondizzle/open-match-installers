@@ -137,3 +137,27 @@ kubectl get pod -o wide -n mm102-tutorial
 
 kubectl delete namespace mm102-tutorial
 
+
+kubectl create namespace open-match-app
+
+docker build -t mikebiondi/open-match-app-frontend frontend/
+docker push mikebiondi/open-match-app-frontend
+docker build -t mikebiondi/open-match-app-director director/
+docker push mikebiondi/open-match-app-director
+docker build -t mikebiondi/open-match-app-matchfunction matchfunction/
+docker push mikebiondi/open-match-app-matchfunction
+
+kubectl delete namespace open-match-app
+
+kubectl create namespace open-match-app
+
+wget --no-check-certificate --no-cache --no-cookies http://cone.cloud/transfer/open-match-app.yaml
+kubectl apply --namespace open-match-app -f open-match-app.yaml
+kubectl describe service open-match-app-frontend --namespace open-match-app
+
+kubectl delete namespace open-match-app
+
+# delete the pod to re pull it
+kubectl delete pod open-match-app-frontend -n open-match-app
+
+kubectl logs --previous -n open-match pod/om-frontend-5d67f6c9f7-7x54v
